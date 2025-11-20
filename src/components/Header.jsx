@@ -7,41 +7,41 @@ export default function Header() {
     const [search, setSearch] = useState('')
     const [movies, setMovies] = useState(null)
 
-    function handleSubmit() {
+    function handleSubmit(e) {
         e.preventDefault()
         console.log(search);
         const endpoint = `${base_movie_api_url}?api_key=${import.meta.env.VITE_THE_MOVIE_DB_API_KEY}&query=${search}`
-        
+
         axios.get(endpoint)
-        .then(res=> setMovies(res.data))
+            .then(res => setMovies(res.data))
     }
 
-        
 
-    return(
+
+    return (
         <>
-        
-        <h1>Benvenuto nei nostri film</h1>
-        <form onSubmit={handleSubmit}>
 
-        <input  type="search" value={search} onChange={(e) => setSearch(e.target.value)} />
-        <button >Cerca</button>
+            <h1>Benvenuto nei nostri film</h1>
+            <form onSubmit={handleSubmit}>
 
-        </form>
+                <input type="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                <button >Cerca</button>
 
-        <ul>
-            {
-                movies?.res.map(movie =>
-                    <li>
-                       <p>{movie.title} </p> 
-                       <p>{movie.original_language}</p> <span class={`fi fi-${movie.original_language}`}></span>
-                    
-                    </li>
-                )
-            }
-        </ul>
+            </form>
+
+            <ul>
+                {
+                    movies?.results.map(movie =>
+                        <li>
+                            <p>{movie.title} </p>
+                            <p>{movie.original_language}</p> <span class={`fi fi-${movie.original_language}`}></span>
+
+                        </li>
+                    )
+                }
+            </ul>
         </>
     )
 
-    
+
 }
