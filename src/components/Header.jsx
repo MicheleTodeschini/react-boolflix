@@ -4,8 +4,10 @@ import axios from "axios"
 export default function Header() {
 
     const base_movie_api_url = 'https://api.themoviedb.org/3/search/movie'
+    const base_serieTv_api_url = 'https://api.themoviedb.org/3/search/tv'
     const [search, setSearch] = useState('')
     const [movies, setMovies] = useState(null)
+    const [tvSeries, setTvSeries] = useState(null)
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -13,9 +15,27 @@ export default function Header() {
         const endpoint = `${base_movie_api_url}?api_key=${import.meta.env.VITE_THE_MOVIE_DB_API_KEY}&query=${search}`
 
         axios.get(endpoint)
-            .then(res => setMovies(res.data))
+            .then(res => setMovies(res.data));
+
+        const endpointTv = `${base_serieTv_api_url}?api_key=${import.meta.env.VITE_THE_MOVIE_DB_API_KEY}&query=${search}`
+        axios.get(endpointTv)
+            .then(res => setTvSeries(res.data))
+
     }
 
+    const languageToCountry = {
+        en: "gb",
+        it: "it",
+        fr: "fr",
+        es: "es",
+        de: "de",
+        ja: "jp",
+        ko: "kr",
+        zh: "cn",
+        pt: "pt",
+        ru: "ru",
+        hr: "hr"
+    };
 
 
     return (
@@ -34,8 +54,21 @@ export default function Header() {
                     movies?.results.map(movie =>
                         <li>
                             <p>{movie.title} </p>
-                            <p>{movie.original_language}</p> <span class={`fi fi-${movie.original_language}`}></span>
-
+                            <p>{movie.original_title}</p>
+                            <span className={`fi fi-${languageToCountry[movie.original_language] || "un"}`}></span>
+                            <p>{movie.vote_average}</p>
+                        </li>
+                    )
+                }
+            </ul>
+            <h3>E qui abbiamo le serie tv</h3>
+            <ul>
+                {
+                    tvSeries?.results.map(serie =>
+                        <li>
+                            <p>{serie.original_name} </p>
+                            <span className={`fi fi-${languageToCountry[serie.original_language] || "un"}`}></span>
+                            <p>{serie.vote_average}</p>
                         </li>
                     )
                 }
