@@ -77,7 +77,7 @@ export default function Header() {
                             <p>{movie.title} </p>
                             <p>{movie.original_title}</p>
                             <span className={`fi fi-${languageToCountry[movie.original_language] || "un"}`}></span>
-                            <p>{getStars(movie.vote_average)}</p>
+                            <p className="text-warning">{getStars(movie.vote_average)}</p>
                         </li>
                     )
                 }
@@ -89,7 +89,7 @@ export default function Header() {
                         <li key={serie.id}>
                             <p>{serie.original_name} </p>
                             <span className={`fi fi-${languageToCountry[serie.original_language] || "un"}`}></span>
-                            <p>{getStars(serie.vote_average)}</p>
+                            <p className="text-warning">{getStars(serie.vote_average)}</p>
                         </li>
                     )
                 }
