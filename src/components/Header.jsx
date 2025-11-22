@@ -10,6 +10,7 @@ export default function Header() {
     const [tvSeries, setTvSeries] = useState(null)
     const thumb = `https://image.tmdb.org/t/p/w342/`
 
+
     function handleSubmit(e) {
         e.preventDefault()
         console.log(search);
@@ -38,6 +39,24 @@ export default function Header() {
         hr: "hr"
     };
 
+    function getStars(vote) {
+
+        const stars = []
+        const star = Math.ceil(vote / 2)
+        const StellaPiena = <i class="bi bi-star-fill"></i>
+        const stellaVuota = <i class="bi bi-star"></i>
+
+        for (let i = 0; i < 5; i++) {
+            if (i < star) {
+                stars.push(StellaPiena)
+            } else {
+                stars.push(stellaVuota)
+            }
+        }
+
+        return stars
+    }
+
 
     return (
         <>
@@ -58,7 +77,7 @@ export default function Header() {
                             <p>{movie.title} </p>
                             <p>{movie.original_title}</p>
                             <span className={`fi fi-${languageToCountry[movie.original_language] || "un"}`}></span>
-                            <p>{movie.vote_average}</p>
+                            <p>{getStars(movie.vote_average)}</p>
                         </li>
                     )
                 }
@@ -70,7 +89,7 @@ export default function Header() {
                         <li key={serie.id}>
                             <p>{serie.original_name} </p>
                             <span className={`fi fi-${languageToCountry[serie.original_language] || "un"}`}></span>
-                            <p>{serie.vote_average}</p>
+                            <p>{getStars(serie.vote_average)}</p>
                         </li>
                     )
                 }
