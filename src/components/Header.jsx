@@ -8,6 +8,7 @@ export default function Header() {
     const [search, setSearch] = useState('')
     const [movies, setMovies] = useState(null)
     const [tvSeries, setTvSeries] = useState(null)
+    const thumb = `https://image.tmdb.org/t/p/w342/`
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -52,7 +53,8 @@ export default function Header() {
             <ul>
                 {
                     movies?.results.map(movie =>
-                        <li>
+                        <li key={movie.id}>
+                            <img src={thumb + movie.poster_path} />
                             <p>{movie.title} </p>
                             <p>{movie.original_title}</p>
                             <span className={`fi fi-${languageToCountry[movie.original_language] || "un"}`}></span>
@@ -65,7 +67,7 @@ export default function Header() {
             <ul>
                 {
                     tvSeries?.results.map(serie =>
-                        <li>
+                        <li key={serie.id}>
                             <p>{serie.original_name} </p>
                             <span className={`fi fi-${languageToCountry[serie.original_language] || "un"}`}></span>
                             <p>{serie.vote_average}</p>
